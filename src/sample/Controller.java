@@ -5,12 +5,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import keyGeneration.PrimeGenerator;
 import streamCipher.StreamCipher;
 
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Controller {
     private File file;
@@ -20,7 +23,7 @@ public class Controller {
     @FXML
     public TextArea prime, g, seed, messages, selectedFile;
     @FXML
-    public Button browse, cipher;
+    public Button browse, cipher, rand;
 
     public Controller() {
         saveToFile = new SaveToFile();
@@ -50,6 +53,15 @@ public class Controller {
         String ciphered = StreamCipher.process(getBytesFromFile(), pL, gL, sL);
         saveToFile.save("output" +  end, ciphered);
         messages.setText("File succesfuly ciphered.");
+    }
+
+    public void pressRand() {
+        long rng1 = PrimeGenerator.genPrime(ThreadLocalRandom.current().nextInt(1000, 5000));
+        prime.setText(String.valueOf(rng1));
+        long rng2 = PrimeGenerator.genPrime(ThreadLocalRandom.current().nextInt(5000,10000));
+        g.setText(String.valueOf(rng2));
+        long rng3 = PrimeGenerator.genPrime(ThreadLocalRandom.current().nextInt(100,1000));
+        seed.setText(String.valueOf(rng3));
     }
 
     private String getBytesFromFile() {
