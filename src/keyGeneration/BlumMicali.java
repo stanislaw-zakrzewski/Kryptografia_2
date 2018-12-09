@@ -6,7 +6,7 @@ public class BlumMicali {
         long a;
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < lenght; i++) {
-            a = modExp(g, x, prime);
+            a = exponentiationBySquaring(g, x, prime);
             if(a <= (prime-1)/2) {
                 stringBuilder.append("1");
             } else {
@@ -17,7 +17,7 @@ public class BlumMicali {
         return stringBuilder.toString();
     }
 
-    private static long modExp(long g, long x, long p) {
+    private static long exponentiationBySquaring(long g, long x, long p) {
         long r = 1;
         while (x > 0) {
             if (x % 2 == 1) {
